@@ -94,30 +94,35 @@ class DoublyLinkedList {
     const dummy2 = new Node(0);
     let dum1Cur = dummy1;
     let dum2Cur = dummy2;
+    let dum1Head = dummy1;
+    let dum2Head = dummy2;
     let current = this.head;
-
-    console.log(dum2Cur);
 
     for (let i = 0; i < this.length; i++) {
       if (current.value < x) {
         dum1Cur.next = current;
-        current.before = dum1Cur;
+        current.prev = dum1Cur;
         dum1Cur = dum1Cur.next;
         current = current.next;
         dum1Cur.next = null;
       } else {
         dum2Cur.next = current;
-        current.before = dum2Cur;
-        dum2Cur = cum2Cur.next;
+        current.prev = dum2Cur;
+        dum2Cur = dum2Cur.next;
         current = current.next;
         dum2Cur.next = null;
       }
-      current.prev = null;
     }
-    dummy2.head = dummy2.head.next;
-    dum1Cur.next = dummy2.head;
-    dummy2.head.prev = dum1Cur;
-    this.head = dummy1.head.next;
+    if (dum1Head.next !== null && dum2Head.next !== null) {
+      dum2Head = dum2Head.next;
+      dum1Cur.next = dum2Head;
+      dum2Head.prev = dum1Cur;
+      this.head = dum1Head.next;
+    } else if (dum1Head.next === null) {
+      this.head = dum2Head.next;
+    } else if (dum2Head.next === null) {
+      this.head = dum1Head.next;
+    }
   }
 }
 
